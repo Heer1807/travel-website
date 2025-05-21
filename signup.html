@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Voyage Vista</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Fonts -->
+    <link rel="stylesheet" href="font/fonts.css">
+    <!-- Normalize CSS -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Apply background image to the body */
+        body {
+            background-image: url('images/header-bg.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.5);
+            font-family: 'Arial', sans-serif;
+            color: #fff; /* Default text color */
+        }
+
+        /* Centering the container */
+        .form-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Full viewport height */
+            padding-top: 100px;
+        }
+
+        /* Form Container with black translucent background */
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            width: 500px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #ffffff;
+            outline: none;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #1ec6b6;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #19b9a2;
+        }
+
+        .toggle-btn {
+            text-align: center;
+            margin-top: 1rem;
+            color: white;
+        }
+
+        .toggle-btn a {
+            color: #1ec6b6;
+            cursor: pointer;
+        }
+
+        .toggle-btn p {
+            color: white;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 0.85rem;
+        }
+
+        /* Hide forms initially */
+        .form-section {
+            display: none;
+        }
+
+        /* Show active form */
+        .form-section.active {
+            display: block;
+        }
+
+        /* Additional password validation styles */
+        #message {
+            display:none;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            width: 460px;
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        #message h3 {
+            color: #1ec6b6;
+            margin-bottom: 10px;
+        }
+
+        #message p {
+            padding: 10px 35px;
+            font-size: 18px;
+        }
+
+        .valid {
+            color: green;
+        }
+
+        .valid:before {
+            position: relative;
+            left: -35px;
+            content: "✔";
+        }
+
+        .invalid {
+            color: red;
+        }
+
+        .invalid:before {
+            position: relative;
+            left: -35px;
+            content: "✖";
+        }
+        .form-group select.form-control {
+            background-color: black; /* Set background color for the select dropdown */
+            color: white; /* Set text color to white for better contrast */
+        }
+
+        .form-group select.form-control option {
+            background-color: black; /* Set background color for the options */
+            color: white; /* Set text color to white */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container flex">
+            <a href="index.html" class="site-brand">
+                Voyage<span>Vista</span>
+            </a>
+
+            <button type="button" id="navbar-show-btn" class="flex">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="navbar-collapse">
+                <button type="button" id="navbar-close-btn" class="flex">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gallery.html" class="nav-link">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog1.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">About</a>
+                    </li>
+                
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="signup.html" class="nav-link">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End of Navbar -->
+
+    <!-- Contact Section -->
+    <div class="form-wrapper">
+        <div class="form-container">
+            <h2 id="form-title">Sign Up</h2>
+            
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="form-section active" action="http://localhost/travelwebsite/signup.php" method="POST" onsubmit="return validateSignupForm()">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="signup-username" name="username" class="form-control" placeholder="Enter your username" required>
+                    <small id="signupUsernameError" class="error-message"></small>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" name="role" class="form-control" required>
+                        <option value="">Select your role</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="seller">Seller</option>
+                    </select>
+                    <small id="roleError" class="error-message"></small>
+                </div>
+                
+            
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="signup-email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <small id="signupEmailError" class="error-message"></small>
+                </div>
+            
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" class="form-control" required>
+                    <small id="dobError" class="error-message"></small>
+                </div>
+            
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="signup-password" name="password" class="form-control" placeholder="Enter your password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <span id="showSignupPassword" class="eye-icon" title="Show/Hide Password"><i class="fas fa-eye-slash"></i></span>
+                    </div>
+                    <small id="signupPasswordError" class="error-message"></small>
+                    <div id="message">
+                        <h3>Password must contain:</h3>
+                        <p id="letter" class="invalid">A lowercase letter</p>
+                        <p id="capital" class="invalid">A capital (uppercase) letter</p>
+                        <p id="number" class="invalid">A number</p>
+                        <p id="length" class="invalid">Minimum 8 characters</p>
+                    </div>
+                </div>
+            
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="signup-confirm-password" name="confirm_password" class="form-control" placeholder="Confirm your password" required>
+                        <span id="showConfirmPassword" class="eye-icon" title="Show/Hide Password"><i class="fas fa-eye-slash"></i></span>
+                    </div>
+                    <small id="signupConfirmPasswordError" class="error-message"></small>
+                </div>             
+            
+                <button type="submit" class="btn">Sign Up</button>
+            
+                <div class="toggle-btn">
+                    <p>Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
+                </div>
+            </form>
+            
+        
+    
+            <!-- Login Form -->
+            <form id="loginForm" class="form-section" action="http://localhost/travelwebsite/login.php" method="POST" onsubmit="return validateLoginForm()">
+                <div class="form-group">
+                    <label for="login-role">Login As</label>
+                    <select id="login-role" name="role" class="form-control" required>
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="seller">Seller</option>
+                    </select>
+                    <small id="loginRoleError" class="error-message"></small>
+                </div>
+            
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" name="username" class="form-control" placeholder="Enter your username" required>
+                    <small id="loginUsernameError" class="error-message"></small>
+                </div>
+            
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" name="password" class="form-control" placeholder="Enter your password" required>
+                        <span id="showLoginPassword" class="eye-icon" title="Show/Hide Password"><i class="fas fa-eye-slash"></i></span>
+                    </div>
+                    <small id="loginPasswordError" class="error-message"></small>
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>            
+        </div>   
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Show/Hide Password Functionality for Signup Password
+        const showSignupPassword = document.getElementById('showSignupPassword');
+
+        showSignupPassword.addEventListener('click', function() {
+            const passwordInput = document.getElementById('signup-password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+            this.querySelector('i').classList.toggle('fa-eye');
+        });
+
+        // Show/Hide Password Functionality for Confirm Password
+        const showConfirmPassword = document.getElementById('showConfirmPassword');
+
+        showConfirmPassword.addEventListener('click', function() {
+            const confirmPasswordInput = document.getElementById('signup-confirm-password');
+            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPasswordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+            this.querySelector('i').classList.toggle('fa-eye');
+        });
+
+        // Show/Hide Password Functionality for Login Password
+        const showLoginPassword = document.getElementById('showLoginPassword');
+
+        showLoginPassword.addEventListener('click', function() {
+            const loginPasswordInput = document.getElementById('login-password');
+            const type = loginPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            loginPasswordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+            this.querySelector('i').classList.toggle('fa-eye');
+        });
+
+        // Toggle between signup and login forms
+        function toggleForms() {
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+            signupForm.classList.toggle('active');
+            loginForm.classList.toggle('active');
+            document.getElementById('form-title').textContent = signupForm.classList.contains('active') ? 'Sign Up' : 'Login';
+        }
+
+        // Validate Signup Form
+        function validateSignupForm() {
+    const username = document.getElementById('signup-username').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const confirmPassword = document.getElementById('signup-confirm-password').value;
+    const role = document.getElementById('role').value;
+
+    let isValid = true;
+
+    // Clear previous error messages
+    document.getElementById('signupUsernameError').textContent = '';
+    document.getElementById('signupEmailError').textContent = '';
+    document.getElementById('signupPasswordError').textContent = '';
+    document.getElementById('signupConfirmPasswordError').textContent = '';
+    document.getElementById('roleError').textContent = '';
+
+    // Username validation
+    if (username.trim() === '') {
+        document.getElementById('signupUsernameError').textContent = 'Username is required.';
+        isValid = false;
+    }
+
+    // Email validation
+    if (email.trim() === '') {
+        document.getElementById('signupEmailError').textContent = 'Email is required.';
+        isValid = false;
+    }
+
+    // Password validation
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    if (!passwordPattern.test(password)) {
+        document.getElementById('signupPasswordError').textContent = 'Password must contain at least one number, one uppercase letter, one lowercase letter, and at least 8 characters.';
+        isValid = false;
+    }
+
+    // Confirm Password validation
+    if (password !== confirmPassword) {
+        document.getElementById('signupConfirmPasswordError').textContent = 'Passwords do not match.';
+        isValid = false;
+    }
+
+    // Role validation
+    if (role === '') {
+        document.getElementById('roleError').textContent = 'Role selection is required.';
+        isValid = false;
+    }
+    // Role validation
+    if (document.getElementById('role').value === '') {
+        document.getElementById('roleError').textContent = 'Role selection is required.';
+        isValid = false;
+    }
+
+
+    return isValid;
+}
+
+
+        // Validate Login Form
+        function validateLoginForm() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            let isValid = true;
+
+            // Clear previous error messages
+            document.getElementById('loginUsernameError').textContent = '';
+            document.getElementById('loginPasswordError').textContent = '';
+
+            // Username validation
+            if (username.trim() === '') {
+                document.getElementById('loginUsernameError').textContent = 'Username is required.';
+                isValid = false;
+            }
+
+            // Password validation
+            if (password.trim() === '') {
+                document.getElementById('loginPasswordError').textContent = 'Password is required.';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Show password validation messages
+        const passwordInput = document.getElementById("signup-password");
+        const message = document.getElementById("message");
+        
+        passwordInput.addEventListener("focus", function() {
+            message.style.display = "block";
+        });
+
+        passwordInput.addEventListener("blur", function() {
+            message.style.display = "none";
+        });
+
+        passwordInput.addEventListener("keyup", function() {
+            const lowerCaseLetters = /[a-z]/g;
+            if(passwordInput.value.match(lowerCaseLetters)) {
+                document.getElementById("letter").classList.remove("invalid");
+                document.getElementById("letter").classList.add("valid");
+            } else {
+                document.getElementById("letter").classList.remove("valid");
+                document.getElementById("letter").classList.add("invalid");
+            }
+
+            const upperCaseLetters = /[A-Z]/g;
+            if(passwordInput.value.match(upperCaseLetters)) {
+                document.getElementById("capital").classList.remove("invalid");
+                document.getElementById("capital").classList.add("valid");
+            } else {
+                document.getElementById("capital").classList.remove("valid");
+                document.getElementById("capital").classList.add("invalid");
+            }
+
+            const numbers = /[0-9]/g;
+            if(passwordInput.value.match(numbers)) {
+                document.getElementById("number").classList.remove("invalid");
+                document.getElementById("number").classList.add("valid");
+            } else {
+                document.getElementById("number").classList.remove("valid");
+                document.getElementById("number").classList.add("invalid");
+            }
+
+            if(passwordInput.value.length >= 8) {
+                document.getElementById("length").classList.remove("invalid");
+                document.getElementById("length").classList.add("valid");
+            } else {
+                document.getElementById("length").classList.remove("valid");
+                document.getElementById("length").classList.add("invalid");
+            }
+        });
+    </script>
+
+<footer class = "py-4">
+    <div class = "container footer-row">
+        <div class = "footer-item">
+            <a href = "index.html" class = "site-brand">
+                Voyage<span>Vista</span>
+            </a>
+            <p class = "text">Voyage Vista is a travel website designed to inspire users by showcasing popular destinations, offering travel services, and facilitating subscriptions for exclusive deals and updates. It features user-friendly navigation, a subscription form, testimonials, and links to social media, all within a responsive design for an engaging experience.</p>
+        </div>
+
+        <div class = "footer-item">
+            <h2>Follow us on: </h2>
+            <ul class = "social-links">
+                <li>
+                    <a href = "#">
+                        <i class = "fab fa-facebook-f"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href = "#">
+                        <i class = "fab fa-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href = "#">
+                        <i class = "fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href = "#">
+                        <i class = "fab fa-pinterest"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href = "#">
+                        <i class = "fab fa-google-plus"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class = "footer-item">
+            <h2>Popular Places:</h2>
+            <ul>
+                <li><a href = "#">Thailand</a></li>
+                <li><a href = "#">Australia</a></li>
+                <li><a href = "#">Maldives</a></li>
+                <li><a href = "#">Switzerland</a></li>
+                <li><a href = "#">Germany</a></li>
+            </ul>
+        </div>
+
+        <div class="subscribe-form footer-item">
+            <h2>Subscribe for Newsletter!</h2>
+            <form action="subscribe.php" method="POST" class="flex">
+                <input type="email" name="email" placeholder="Enter Email" class="form-control" required>
+                <input type="submit" class="btn" value="Subscribe">
+            </form>
+        </div>
+    </div>
+</footer>
+<!-- end of footer -->
+
+<!-- js -->
+<script src = "js/script.js"></script>
+<script>
+    
+</script>
+</body>
+</html>

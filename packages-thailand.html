@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VoyageVista - Wat Arun and Bangkok.</title>
+    <meta name="description" content="Travel packages to Rio de Janeiro">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- fonts -->
+    <link rel="stylesheet" href="font/fonts.css">
+    <!-- normalize css -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Ensuring cards are horizontal */
+        /* Style for the Background Banner */
+.background-banner {
+    position: relative;
+    height: 80vh; /* Increase height of the banner */
+    background: url('images/t-banner.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.background-banner .banner-content {
+    z-index: 1;
+}
+
+.background-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay for better text visibility */
+    z-index: 0;
+}
+
+.background-banner h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    animation: fadeInDown 2s ease-in-out;
+}
+
+.background-banner p {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    animation: fadeInUp 2s ease-in-out;
+}
+
+/* Keyframe Animations */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.packages-section h2 {
+    text-align: center;
+    font-size: 2rem; /* Adjust font size if needed */
+    margin-bottom: 20px;
+}
+
+
+.packages-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjusts the space between cards */
+    justify-content: space-around;
+}
+/* Package Card Hover Effect */
+.package-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 20px); /* Three cards per row */
+    max-width: 300px;
+    background: #fff;
+    border-radius: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.package-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Zoom Effect on Hover */
+.package-card img {
+    transition: transform 0.3s ease;
+}
+
+.package-card:hover img {
+    transform: scale(1.1);
+}
+
+.package-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Button container with flex for side-by-side layout */
+.package-card .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Spacing between buttons */
+    margin-top: auto; /* Pushes buttons to the bottom */
+    width: 100%;
+}
+
+.package-card .btn {
+    flex: 1;
+    max-width: 120px; /* Optional: limit button width for uniformity */
+}
+
+@media (max-width: 768px) {
+    .packages-grid {
+        flex-direction: column;
+    }
+    .package-card {
+        max-width: 100%;
+    }
+}
+.package-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #FF6347; /* A bright color for the price */
+}
+
+/* Basic Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0,0,0,0.4); /* Semi-transparent black background */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80%; /* Set maximum height for modal content */
+    position: relative; /* Ensure positioning for close button */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container flex">
+            <a href="index.html" class="site-brand">
+                Voyage<span>Vista</span>
+            </a>
+            <button type="button" id="navbar-show-btn" class="flex">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="navbar-collapse">
+                <button type="button" id="navbar-close-btn" class="flex">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="blog1.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="signup.html" class="nav-link">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End of Navbar -->
+
+    <!-- Background Image Section -->
+    <!-- Background Image Section -->
+    <section class="background-banner">
+        <div class="banner-content">
+            <h1>Discover Wat Arun</h1>
+            <p>Immerse yourself in the cultural wonders of Wat Arun and Bangkok.</p>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section class="packages-section">
+        <div class="container">
+            <h2>Wat Arun Travel Packages</h2>
+            <div class="packages-grid">
+                <!-- Package Card 1 -->
+                <div class="package-card">
+                    <img src="images/t1.jpg" alt="Wat Arun Temple Tour">
+                    <h3>Wat Arun Temple Tour</h3>
+                    <p>Explore the stunning architecture of Wat Arun Temple.</p>
+                    <div class="package-price">
+                        <p>$200</p>
+                    </div>
+                    <div class="button-container">
+                        <button class="btn show-more" data-title="Wat Arun Temple Tour" data-details="
+                            <h4>Day 1: Arrival and City Tour</h4><p>Arrive in Bangkok, with an evening city tour.</p>
+                            <h4>Day 2: Wat Arun Temple Visit</h4><p>Guided tour of Wat Arun Temple and nearby temples.</p>
+                            <h4>Day 3: Cultural Experience</h4><p>Join a traditional Thai cooking class.</p>
+                            <h4>Day 4: Departure</h4><p>Farewell lunch and departure from Bangkok.</p>">Show More</button>
+                        <button class="btn book-now">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package Card 2 -->
+                <div class="package-card">
+                    <img src="images/t2.jpg" alt="Wat Pho and Grand Palace Tour">
+                    <h3>Wat Pho and Grand Palace Tour</h3>
+                    <p>Explore Bangkok's historic landmarks including Wat Pho and the Grand Palace.</p>
+                    <div class="package-price">
+                        <p>$250</p>
+                    </div>
+                    <div class="button-container">
+                        <button class="btn show-more" data-title="Wat Pho and Grand Palace Tour" data-details="
+                            <h4>Day 1: Arrival and City Tour</h4><p>Arrive and get a brief introduction to Bangkok.</p>
+                            <h4>Day 2: Wat Pho and Grand Palace</h4><p>Visit the Grand Palace and the famous Wat Pho.</p>
+                            <h4>Day 3: Chao Phraya River Cruise</h4><p>Enjoy a relaxing cruise along the Chao Phraya River.</p>
+                            <h4>Day 4: Departure</h4><p>Farewell lunch and departure from Bangkok.</p>">Show More</button>
+                        <button class="btn book-now">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package Card 3 -->
+                <div class="package-card">
+                    <img src="images/t3.jpg" alt="Chao Phraya River Boat Tour">
+                    <h3>Chao Phraya River Boat Tour</h3>
+                    <p>Relax with a scenic boat tour along the Chao Phraya River.</p>
+                    <div class="package-price">
+                        <p>$150</p>
+                    </div>
+                    <div class="button-container">
+                        <button class="btn show-more" data-title="Chao Phraya River Boat Tour" data-details="
+                            <h4>Day 1: Arrival and Chao Phraya River Introduction</h4><p>Arrive and enjoy a river-side dinner.</p>
+                            <h4>Day 2: Chao Phraya River Tour</h4><p>Take a boat ride along the Chao Phraya River.</p>
+                            <h4>Day 3: Visit to Icon Siam Mall</h4><p>Visit one of Bangkok's most famous malls.</p>
+                            <h4>Day 4: Departure</h4><p>Farewell and departure from Bangkok.</p>">Show More</button>
+                        <button class="btn book-now">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package Card 4 -->
+                <div class="package-card">
+                    <img src="images/t4.jpg" alt="Cultural Thai Experience">
+                    <h3>Cultural Thai Experience</h3>
+                    <p>Delve into the rich culture of Thailand with this immersive tour.</p>
+                    <div class="package-price">
+                        <p>$270</p>
+                    </div>
+                    <div class="button-container">
+                        <button class="btn show-more" data-title="Cultural Thai Experience" data-details="
+                            <h4>Day 1: Arrival and Cultural Introduction</h4><p>Learn about Thai traditions with a cultural guide.</p>
+                            <h4>Day 2: Thai Massage and Cooking Class</h4><p>Experience traditional Thai massage and cooking classes.</p>
+                            <h4>Day 3: Traditional Thai Dance Performance</h4><p>Attend a traditional Thai dance performance.</p>
+                            <h4>Day 4: Departure</h4><p>Farewell and departure from Bangkok.</p>">Show More</button>
+                        <button class="btn book-now">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package Card 5 -->
+                <div class="package-card">
+                    <img src="images/t5.jpg" alt="Bangkok Market Tour">
+                    <h3>Bangkok Market Tour</h3>
+                    <p>Explore Bangkok’s famous street markets and local culture.</p>
+                    <div class="package-price">
+                        <p>$180</p>
+                    </div>
+                    <div class="button-container">
+                        <button class="btn show-more" data-title="Bangkok Market Tour" data-details="
+                            <h4>Day 1: Arrival and Street Market Introduction</h4><p>Explore street markets and sample local snacks.</p>
+                            <h4>Day 2: Chatuchak Weekend Market</h4><p>Visit Chatuchak Market, one of the largest in Thailand.</p>
+                            <h4>Day 3: Floating Market Tour</h4><p>Experience a traditional floating market.</p>
+                            <h4>Day 4: Departure</h4><p>Farewell lunch and departure from Bangkok.</p>">Show More</button>
+                        <button class="btn book-now">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Package Card 6 -->
+                <div class="package-card">
+                    <img src="images/t6.jpg" alt="Sunset on the Chao Phraya River">
+                    <h3>Sunset on the Chao Phraya River</h3>
+                    <p>Enjoy a stunning sunset cruise on the Chao Phraya River.</p>
+                    <div class="package-price">
+                        <p>$220</p>
+                    </div>
+                    <div class="button-container">
+                        <button class="btn show-more" data-title="Sunset on the Chao Phraya River" data-details="
+                            <h4>Day 1: Arrival and River Dinner Cruise</h4><p>Experience the beauty of the river at sunset.</p>
+                            <h4>Day 2: Temple of Dawn Tour</h4><p>Visit the iconic Temple of Dawn during sunset.</p>
+                            <h4>Day 3: Visit to Asiatique Mall</h4><p>Explore the night market at Asiatique Mall.</p>
+                            <h4>Day 4: Departure</h4><p>Farewell and departure from Bangkok.</p>">Show More</button>
+                        <button class="btn book-now">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End of Packages Section -->
+    <div id="packageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span> 
+            <h3 id="modalTitle"></h3>
+            <div id="modalDetails"></div>
+        </div>
+        
+    </div>
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container footer-row">
+            <div class="footer-item">
+                <a href="index.html" class="site-brand">
+                    Voyage<span>Vista</span>
+                </a>
+                <p class="text">Voyage Vista is a travel website designed to inspire users by showcasing popular destinations, offering travel services, and facilitating subscriptions for exclusive deals and updates. It features user-friendly navigation, a subscription form, testimonials, and links to social media, all within a responsive design for an engaging experience.</p>
+            </div>
+            <div class="footer-item">
+                <h2>Follow us on: </h2>
+                <ul class="social-links">
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+                    <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-item">
+                <h2>Popular Places:</h2>
+                <ul>
+                    <li><a href="#">Thailand</a></li>
+                    <li><a href="#">Australia</a></li>
+                    <li><a href="#">Maldives</a></li>
+                    <li><a href="#">Switzerland</a></li>
+                    <li><a href="#">Germany</a></li>
+                </ul>
+            </div>
+            <div class="subscribe-form footer-item">
+                <h2>Subscribe for Newsletter!</h2>
+                <form action="subscribe.php" method="POST" class="flex">
+                    <input type="email" name="email" placeholder="Enter Email" class="form-control" required>
+                    <input type="submit" class="btn" value="Subscribe">
+                </form>
+            </div>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+    <script>
+        // Get the modal
+var modal = document.getElementById("packageModal");
+
+// Get the <span> element that closes the modal
+var closeBtn = document.getElementsByClassName("close-btn")[0];
+
+// When the user clicks on the "Show More" button
+var showMoreButtons = document.querySelectorAll('.show-more');
+showMoreButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        var title = this.getAttribute('data-title');
+        var details = this.getAttribute('data-details');
+        
+        // Set the modal title and details
+        document.getElementById("modalTitle").innerHTML = title;
+        document.getElementById("modalDetails").innerHTML = details;
+
+        // Display the modal
+        modal.style.display = "block";
+    });
+});
+
+// When the user clicks on <span> (x), close the modal
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+    </script>
+</body>
+</html>

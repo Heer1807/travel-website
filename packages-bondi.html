@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VoyageVista - north Bondi</title>
+    <meta name="description" content="Travel packages to Rio de Janeiro">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- fonts -->
+    <link rel="stylesheet" href="font/fonts.css">
+    <!-- normalize css -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Ensuring cards are horizontal */
+        /* Style for the Background Banner */
+.background-banner {
+    position: relative;
+    height: 80vh; /* Increase height of the banner */
+    background: url('images/bondi-banner.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.background-banner .banner-content {
+    z-index: 1;
+}
+
+.background-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay for better text visibility */
+    z-index: 0;
+}
+
+.background-banner h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    animation: fadeInDown 2s ease-in-out;
+}
+
+.background-banner p {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    animation: fadeInUp 2s ease-in-out;
+}
+
+/* Keyframe Animations */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.packages-section h2 {
+    text-align: center;
+    font-size: 2rem; /* Adjust font size if needed */
+    margin-bottom: 20px;
+}
+
+
+.packages-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjusts the space between cards */
+    justify-content: space-around;
+}
+/* Package Card Hover Effect */
+.package-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 20px); /* Three cards per row */
+    max-width: 300px;
+    background: #fff;
+    border-radius: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.package-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Zoom Effect on Hover */
+.package-card img {
+    transition: transform 0.3s ease;
+}
+
+.package-card:hover img {
+    transform: scale(1.1);
+}
+
+.package-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Button container with flex for side-by-side layout */
+.package-card .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Spacing between buttons */
+    margin-top: auto; /* Pushes buttons to the bottom */
+    width: 100%;
+}
+
+.package-card .btn {
+    flex: 1;
+    max-width: 120px; /* Optional: limit button width for uniformity */
+}
+
+@media (max-width: 768px) {
+    .packages-grid {
+        flex-direction: column;
+    }
+    .package-card {
+        max-width: 100%;
+    }
+}
+.package-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #FF6347; /* A bright color for the price */
+}
+
+/* Basic Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0,0,0,0.4); /* Semi-transparent black background */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80%; /* Set maximum height for modal content */
+    position: relative; /* Ensure positioning for close button */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container flex">
+            <a href="index.html" class="site-brand">
+                Voyage<span>Vista</span>
+            </a>
+            <button type="button" id="navbar-show-btn" class="flex">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="navbar-collapse">
+                <button type="button" id="navbar-close-btn" class="flex">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="blog1.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="signup.html" class="nav-link">Sign Up</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End of Navbar -->
+
+    <!-- Background Image Section -->
+    <!-- Background Image Section -->
+<section class="background-banner">
+    <div class="banner-content">
+        <h1>Discover North Bondi</h1>
+        <p>Explore our exclusive travel packages for an unforgettable coastal adventure.</p>
+    </div>
+</section>
+
+<!-- Packages Section -->
+<section class="packages-section">
+    <div class="container">
+        <h2>North Bondi Travel Packages</h2>
+        <div class="packages-grid">
+            <!-- Package Card 1 -->
+            <div class="package-card">
+                <img src="images/nb1.jpg" alt="Surf Lessons">
+                <h3>Surf Lessons at Bondi Beach</h3>
+                <p>Learn to surf at the world-famous Bondi Beach with expert instructors.</p>
+                <div class="package-price">
+                    <p>$150</p> 
+                </div>
+                <div class="button-container">
+                    <button class="btn show-more" data-title="Surf Lessons at Bondi Beach" data-details="
+                        <h4>Day 1: Arrival and Beach Welcome</h4><p>Arrive in Bondi and enjoy a welcome event on the beach.</p>
+                        <h4>Day 2: Surf Lessons</h4><p>Begin your surf journey with a full day of lessons from experienced surfers.</p>
+                        <h4>Day 3: Free Day</h4><p>Spend the day practicing your new skills on the waves or relax on the beach.</p>
+                        <h4>Day 4: Departure</h4><p>Farewell brunch and departure from Bondi Beach.</p>">Show More</button>
+                    <button class="btn book-now">Book Now</button>
+                </div>
+            </div>
+            
+            <!-- Package Card 2 -->
+            <div class="package-card">
+                <img src="images/nb2.jpg" alt="Bondi to Coogee Coastal Walk">
+                <h3>Bondi to Coogee Coastal Walk</h3>
+                <p>Experience the scenic coastal walk from Bondi to Coogee with guided tours.</p>
+                <div class="package-price">
+                    <p>$120</p>
+                </div>
+                <div class="button-container">
+                    <button class="btn show-more" data-title="Bondi to Coogee Coastal Walk" data-details="
+                        <h4>Day 1: Arrival and Beach Welcome</h4><p>Settle in and enjoy the coastal vibes of Bondi.</p>
+                        <h4>Day 2: Bondi to Coogee Walk</h4><p>Embark on a guided walk along the beautiful coast, taking in the cliffs and ocean views.</p>
+                        <h4>Day 3: Free Day</h4><p>Spend the day relaxing or exploring Bondi’s cafés and shops.</p>
+                        <h4>Day 4: Departure</h4><p>Farewell brunch and departure from Bondi Beach.</p>">Show More</button>
+                    <button class="btn book-now">Book Now</button>
+                </div>
+            </div>
+            
+            <!-- Package Card 3 -->
+            <div class="package-card">
+                <img src="images/nb3.jpg" alt="Snorkeling Adventure">
+                <h3>Snorkeling Adventure</h3>
+                <p>Dive into Bondi's clear waters and discover the vibrant marine life.</p>
+                <div class="package-price">
+                    <p>$200</p>
+                </div>
+                <div class="button-container">
+                    <button class="btn show-more" data-title="Snorkeling Adventure" data-details="
+                        <h4>Day 1: Arrival and Beach Welcome</h4><p>Welcome to Bondi with an evening of live music on the beach.</p>
+                        <h4>Day 2: Snorkeling Session</h4><p>Join a guided snorkeling tour to explore underwater habitats and marine life.</p>
+                        <h4>Day 3: Free Day</h4><p>Enjoy a relaxing day at the beach or participate in optional water sports.</p>
+                        <h4>Day 4: Departure</h4><p>Farewell brunch and departure from Bondi Beach.</p>">Show More</button>
+                    <button class="btn book-now">Book Now</button>
+                </div>
+            </div>
+            
+            <!-- Package Card 4 -->
+            <div class="package-card">
+                <img src="images/nb4.jpg" alt="Beach Yoga Retreat">
+                <h3>Beach Yoga Retreat</h3>
+                <p>Rejuvenate with yoga sessions on Bondi’s beautiful beach.</p>
+                <div class="package-price">
+                    <p>$250</p>
+                </div>
+                <div class="button-container">
+                    <button class="btn show-more" data-title="Beach Yoga Retreat" data-details="
+                        <h4>Day 1: Arrival and Welcome Yoga</h4><p>Begin with a relaxing yoga session overlooking the ocean.</p>
+                        <h4>Day 2: Morning and Evening Yoga</h4><p>Start your day with energizing morning yoga and unwind with evening meditation.</p>
+                        <h4>Day 3: Free Day</h4><p>Explore Bondi’s peaceful spots or join another yoga session.</p>
+                        <h4>Day 4: Departure</h4><p>Farewell brunch and departure from Bondi Beach.</p>">Show More</button>
+                    <button class="btn book-now">Book Now</button>
+                </div>
+            </div>
+            
+            <!-- Package Card 5 -->
+            <div class="package-card">
+                <img src="images/nb5.jpg" alt="Aboriginal Cultural Tour">
+                <h3>Aboriginal Cultural Tour</h3>
+                <p>Discover Bondi’s rich Aboriginal heritage with local guides.</p>
+                <div class="package-price">
+                    <p>$180</p>
+                </div>
+                <div class="button-container">
+                    <button class="btn show-more" data-title="Aboriginal Cultural Tour" data-details="
+                        <h4>Day 1: Arrival and Cultural Introduction</h4><p>Arrive and enjoy an introduction to Aboriginal culture.</p>
+                        <h4>Day 2: Guided Cultural Tour</h4><p>Join a local guide to explore Bondi’s history and Aboriginal heritage.</p>
+                        <h4>Day 3: Free Day</h4><p>Relax on the beach or continue exploring cultural landmarks.</p>
+                        <h4>Day 4: Departure</h4><p>Farewell brunch and departure from Bondi Beach.</p>">Show More</button>
+                    <button class="btn book-now">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Package Card 6 -->
+            <div class="package-card">
+                <img src="images/nb6.jpg" alt="Bondi Nightlife Tour">
+                <h3>Bondi Nightlife Tour</h3>
+                <p>Experience Bondi’s vibrant nightlife, from beach bars to live music.</p>
+                <div class="package-price">
+                    <p>$130</p>
+                </div>
+                <div class="button-container">
+                    <button class="btn show-more" data-title="Bondi Nightlife Tour" data-details="
+                        <h4>Day 1: Arrival and Welcome Drinks</h4><p>Arrive and join a welcome gathering at a local bar.</p>
+                        <h4>Day 2: Bondi Nightlife Tour</h4><p>Explore Bondi’s best nightlife spots with a guided tour of bars and music venues.</p>
+                        <h4>Day 3: Free Day</h4><p>Relax or continue exploring Bondi’s vibrant atmosphere.</p>
+                        <h4>Day 4: Departure</h4><p>Farewell brunch and departure from Bondi Beach.</p>">Show More</button>
+                    <button class="btn book-now">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- End of Packages Section -->
+    <div id="packageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span> 
+            <h3 id="modalTitle"></h3>
+            <div id="modalDetails"></div>
+        </div>
+        
+    </div>
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container footer-row">
+            <div class="footer-item">
+                <a href="index.html" class="site-brand">
+                    Voyage<span>Vista</span>
+                </a>
+                <p class="text">Voyage Vista is a travel website designed to inspire users by showcasing popular destinations, offering travel services, and facilitating subscriptions for exclusive deals and updates. It features user-friendly navigation, a subscription form, testimonials, and links to social media, all within a responsive design for an engaging experience.</p>
+            </div>
+            <div class="footer-item">
+                <h2>Follow us on: </h2>
+                <ul class="social-links">
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+                    <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-item">
+                <h2>Popular Places:</h2>
+                <ul>
+                    <li><a href="#">Thailand</a></li>
+                    <li><a href="#">Australia</a></li>
+                    <li><a href="#">Maldives</a></li>
+                    <li><a href="#">Switzerland</a></li>
+                    <li><a href="#">Germany</a></li>
+                </ul>
+            </div>
+            <div class="subscribe-form footer-item">
+                <h2>Subscribe for Newsletter!</h2>
+                <form action="subscribe.php" method="POST" class="flex">
+                    <input type="email" name="email" placeholder="Enter Email" class="form-control" required>
+                    <input type="submit" class="btn" value="Subscribe">
+                </form>
+            </div>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+    <script>
+        // Get the modal
+var modal = document.getElementById("packageModal");
+
+// Get the <span> element that closes the modal
+var closeBtn = document.getElementsByClassName("close-btn")[0];
+
+// When the user clicks on the "Show More" button
+var showMoreButtons = document.querySelectorAll('.show-more');
+showMoreButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        var title = this.getAttribute('data-title');
+        var details = this.getAttribute('data-details');
+        
+        // Set the modal title and details
+        document.getElementById("modalTitle").innerHTML = title;
+        document.getElementById("modalDetails").innerHTML = details;
+
+        // Display the modal
+        modal.style.display = "block";
+    });
+});
+
+// When the user clicks on <span> (x), close the modal
+closeBtn.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+    </script>
+</body>
+</html>

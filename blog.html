@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoyageVista - Blog</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="font/fonts.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/utility.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Blog Section Styling */
+#blog {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Individual Blog Item Styling */
+.blog-item {
+    flex: 1 1 calc(33.333% - 20px);
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for cards */
+.blog-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Blog Image Styling */
+.blog-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Blog Item Content Styling */
+.blog-item .blog-item-bottom {
+    padding: 20px;
+}
+
+.blog-item .blog-item-bottom a {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.blog-item .blog-item-bottom a:hover {
+    color: #007BFF;
+}
+
+.blog-item .blog-item-bottom .text {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Blog Item Date Styling */
+.blog-item .blog-date {
+    font-size: 0.9rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container flex">
+            <a href="index.html" class="site-brand">
+                Voyage<span>Vista</span>
+            </a>
+            <button type="button" id="navbar-show-btn" class="flex">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="navbar-collapse">
+                <button type="button" id="navbar-close-btn" class="flex">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="signup.html" class="nav-link">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="flex header-sm">
+        <div class="container">
+            <div class="header-title">
+                <h1>Blog</h1>
+                <p>Explore captivating stories, travel guides, and tips from around the world. Whether you're an avid explorer or planning your next getaway, our blog offers insights and inspiration to make every journey unforgettable.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Section (where the blog posts will be dynamically inserted) -->
+    <section id="blog" class="blog-section">
+        <!-- The blog posts will be dynamically inserted here by JavaScript -->
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container footer-row">
+            <div class="footer-item">
+                <a href="index.html" class="site-brand">Voyage<span>Vista</span></a>
+                <p class="text">Voyage Vista is a travel website designed to inspire users by showcasing popular destinations, offering travel services, and facilitating subscriptions for exclusive deals and updates.</p>
+            </div>
+            <div class="footer-item">
+                <h2>Follow us on:</h2>
+                <ul class="social-links">
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+                    <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-item">
+                <h2>Popular Places:</h2>
+                <ul>
+                    <li><a href="#">Thailand</a></li>
+                    <li><a href="#">Australia</a></li>
+                    <li><a href="#">Maldives</a></li>
+                    <li><a href="#">Switzerland</a></li>
+                    <li><a href="#">Germany</a></li>
+                </ul>
+            </div>
+            <div class="subscribe-form footer-item">
+                <h2>Subscribe for Newsletter!</h2>
+                <form action="subscribe.php" method="POST" class="flex">
+                    <input type="email" name="email" placeholder="Enter Email" class="form-control" required>
+                    <input type="submit" class="btn" value="Subscribe">
+                </form>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('xml/blog.xml')
+                .then(response => response.text())  // Get the XML as text
+                .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))  // Parse the XML
+                .then(data => {
+                    const blogItems = data.getElementsByTagName('blog');
+                    let blogHTML = '';
+
+                    // Loop through each blog item and create HTML content
+                    for (let i = 0; i < blogItems.length; i++) {
+                        const blog = blogItems[i];
+                        const title = blog.getElementsByTagName('title')[0].textContent;
+                        const author = blog.getElementsByTagName('author')[0].textContent;
+                        const date = blog.getElementsByTagName('date')[0].textContent;
+                        const description = blog.getElementsByTagName('description')[0].textContent;
+                        const image = blog.getElementsByTagName('image')[0].textContent;
+                        const link = blog.getElementsByTagName('link')[0].textContent;
+
+                        blogHTML += `
+                            <div class="blog-item">
+                                <div class="blog-item-top">
+                                    <img src="${image}" alt="${title}">
+                                    <span class="blog-date">${date}</span>
+                                </div>
+                                <div class="blog-item-bottom">
+                                    <span>Travel | ${author}</span>
+                                    <a href="${link}">${title}</a>
+                                    <p class="text">${description}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Insert the blog content into the page
+                    document.getElementById('blog').innerHTML = blogHTML;
+                })
+                .catch(error => console.error('Error loading the blog XML:', error));
+        });
+    </script>
+</body>
+</html>
